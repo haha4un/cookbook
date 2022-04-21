@@ -37,31 +37,24 @@ class MainActivity : AppCompatActivity() {
 
 
         scrool.addView(child)
-        add("f", scrool)
-        add("f", scrool)
-        add("f", scrool)
-        add("f", scrool)
-        add("f", scrool)
-        add("f", scrool)
-        add("f", scrool)
-        add("f", scrool)
-        add("f", scrool)
-        add("f", scrool)
-        add("f", scrool)
+        add("Кулябяка", scrool, base)
 
-        str = BaseReader(base)
+        str = BaseReader(base, "Кулябяка")
     }
 
-    fun BaseReader(db: SQLiteDatabase) : String
+    fun BaseReader(db: SQLiteDatabase, key: String) : String
     {
         var cursor: Cursor = db.rawQuery("SELECT * FROM cooks", null)
 
         var str: String = "БЛЮДО: "
-        while(cursor.moveToNext())
-        {
-             str += cursor.getString(0)
-            str += " Рецепт: "
-             str+= cursor.getString(1)
+        while(cursor.moveToNext()) {
+            if (key == cursor.getString(0))
+            {
+                str += cursor.getString(0)
+                str += " Рецепт: "
+                str += cursor.getString(1)
+                return str
+            }
         }
 
         cursor.close()
@@ -77,7 +70,9 @@ class MainActivity : AppCompatActivity() {
 
         noneContent.setOnClickListener()
         {
-            BaseReader(db)
+           var res = BaseReader(db, res)
+            test?.text = res
         }
     }
 }
+

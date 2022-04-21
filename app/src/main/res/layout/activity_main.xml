@@ -16,7 +16,7 @@
         app:layout_constraintRight_toRightOf="parent" />
 
     <ScrollView
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="1dp"
         android:layout_marginTop="5dp"
@@ -29,12 +29,12 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <LinearLayout
+            android:id="@+id/scrooler"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/scrooler"
-            android:orientation="vertical" >
+            android:orientation="vertical">
 
-<!--            u code -->
+            <!--            u code -->
         </LinearLayout>
     </ScrollView>
 
