@@ -1,5 +1,6 @@
 package com.example.cookbook
 
+import android.content.Intent
 import android.content.res.Resources
 import android.database.Cursor
 import android.database.sqlite.SQLiteDatabase
@@ -13,6 +14,7 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.core.graphics.drawable.toDrawable
+import java.lang.reflect.Array
 import java.util.*
 
 class MainActivity : AppCompatActivity() {
@@ -30,35 +32,38 @@ class MainActivity : AppCompatActivity() {
          var str = getFilesDir().getPath() + "cooks.sql"
 
         var base: SQLiteDatabase = baseContext.openOrCreateDatabase("cook.db", MODE_PRIVATE, null)
-        base.execSQL("CREATE TABLE IF NOT EXISTS cooks (name, what)")
-        base.execSQL("INSERT INTO cooks VALUES ('Кулябяка', 'Куипи')")
-        base.execSQL("INSERT INTO cooks VALUES ('Кулябяка', 'Куипи')")
-        base.execSQL("INSERT INTO cooks VALUES ('Кулябяка', 'Куипи')")
-
+        base.execSQL("CREATE TABLE IF NOT EXISTS cooks (key, name, what)")
+        base.execSQL("INSERT INTO cooks VALUES ('Кулябяка', 'КуипиКуипиКуипиКуипиКуипиКуипиКуипиКуипиКуипиКуип')");
 
         scrool.addView(child)
         add("Кулябяка", scrool, base)
 
-        str = BaseReader(base, "Кулябяка")
     }
 
-    fun BaseReader(db: SQLiteDatabase, key: String) : String
+    fun BaseReader(db: SQLiteDatabase, key: String) : kotlin.Array<String>
     {
         var cursor: Cursor = db.rawQuery("SELECT * FROM cooks", null)
 
-        var str: String = "БЛЮДО: "
+        var name: String = "БЛЮДО: "
+        var str: String = ""
+
+        var arr: kotlin.Array<String> = arrayOf("empty name", "&&&")
         while(cursor.moveToNext()) {
+
             if (key == cursor.getString(0))
             {
-                str += cursor.getString(0)
-                str += " Рецепт: "
+                name += cursor.getString(0)
+                str += "Рецепт:\n"
                 str += cursor.getString(1)
-                return str
+
+                arr = arrayOf(name, str)
+                return arr
             }
+
         }
 
         cursor.close()
-        return str;
+        return arr;
     }
 
     fun add(res: String, scrool: LinearLayout, db: SQLiteDatabase)
@@ -70,8 +75,13 @@ class MainActivity : AppCompatActivity() {
 
         noneContent.setOnClickListener()
         {
-           var res = BaseReader(db, res)
-            test?.text = res
+           var how = BaseReader(db, res)[1]
+            var name = BaseReader(db, res)[0]
+
+            var toNext: Intent = Intent(this, food::class.java)
+            toNext.putExtra("KEY",how)
+            toNext.putExtra("NAME",name)
+            startActivity(toNext)
         }
     }
 }
