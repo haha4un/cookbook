@@ -1,9 +1,7 @@
 package com.example.cookbook
 
-import android.content.Context
 import android.content.Intent
 import android.database.Cursor
-import android.database.DatabaseErrorHandler
 import android.database.sqlite.SQLiteDatabase
 import android.os.Bundle
 import android.widget.ImageButton
@@ -12,7 +10,6 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
-import java.util.*
 
 class MainActivity : AppCompatActivity() {
     var test: TextView ?= null
@@ -39,7 +36,7 @@ class MainActivity : AppCompatActivity() {
 
 
         scrool.addView(child)
-        add("124", scrool, base)
+        add("124", scrool, base, "sco")
         add("OMELET", scrool, base)
 
     }
@@ -70,7 +67,7 @@ class MainActivity : AppCompatActivity() {
         return arr;
     }
 
-    fun add(res: String, scrool: LinearLayout, db: SQLiteDatabase)
+    fun add(res: String, scrool: LinearLayout, db: SQLiteDatabase, imageRes: String = "img")
     {
         var noneContent: ImageButton = ImageButton(this)
         noneContent.setImageDrawable(
@@ -85,6 +82,8 @@ class MainActivity : AppCompatActivity() {
             var toNext: Intent = Intent(this, food::class.java)
             toNext.putExtra("KEY",how)
             toNext.putExtra("NAME",name)
+            toNext.putExtra("IMAGE", "$imageRes")
+
             startActivity(toNext)
         }
     }

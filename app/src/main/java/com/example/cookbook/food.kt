@@ -18,48 +18,17 @@ class food : AppCompatActivity() {
 
         var res = intent.getSerializableExtra("KEY")
         var name = intent.getSerializableExtra("NAME")
+        var image = intent.getStringExtra("IMAGE")
 
-
+        val mDrawableName = image
+        val resID = resources.getIdentifier(mDrawableName, "drawable", packageName)
 
         var howTxt: TextView = findViewById(R.id.how)
-        var nameTxt: TextView = findViewById(R.id.name)
 
-        howTxt.text = res.toString()
-        nameTxt.text = name.toString()
+        howTxt.text =name.toString() +"\n\n"+ res.toString()
 
         var imageView: ImageButton = ImageButton(this)
+        imageView.setImageResource(resID)
         scroller.addView(imageView)
-        imageView.setImageResource(R.drawable.img)
     }
-//    fun AddImages(array: CharArray, scrool: LinearLayout)
-//    {
-//        var count = 0
-//        var toIm = 0
-//        var Img: String = ""
-//
-//        var Imgs = Array(2, {""})
-//        var imgCount = 0
-//
-//        while (count < array.size)
-//        {
-//            if (array[count] == '[')
-//            {
-//                toIm = count+1
-//                while (true)
-//                {
-//                    if (array[toIm] == ']')
-//                    {
-//                        imgCount++
-//                        break
-//                    }
-//                    Img += array[toIm]
-//                    toIm++
-//                }
-//                Imgs[imgCount] = Img
-//            }
-//            if (imgCount == 10)
-//                break
-//            count++
-//        }
-//    } //I don't know why I made It _/-(/_/)-\_
 }
