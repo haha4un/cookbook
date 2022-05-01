@@ -18,7 +18,7 @@ import java.lang.reflect.Array
 import java.util.*
 
 class MainActivity : AppCompatActivity() {
-
+    // TODO над короч добавить ключ в таблицу и улучшить бд, а также сделать чтец из существующей бд-шки. ВСЕМ ПИС!(☞ﾟヮﾟ)☞☜(ﾟヮﾟ☜)
     var test: TextView ?= null
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -32,11 +32,14 @@ class MainActivity : AppCompatActivity() {
          var str = getFilesDir().getPath() + "cooks.sql"
 
         var base: SQLiteDatabase = baseContext.openOrCreateDatabase("cook.db", MODE_PRIVATE, null)
-        base.execSQL("CREATE TABLE IF NOT EXISTS cooks (key, name, what)")
-        base.execSQL("INSERT INTO cooks VALUES ('Кулябяка', 'КуипиКуипиКуипиКуипиКуипиКуипиКуипиКуипиКуипиКуип')");
+//        base.execSQL("DROP TABLE cooks")
+        base.execSQL("CREATE TABLE IF NOT EXISTS cooks (keys, name, what)")
+        base.execSQL("INSERT INTO cooks VALUES ('Кулябяка','КуипиКуипиКуипиКуипиКуипиКуипиКуипиКуипиКуипиКуип', 'КуипиКуипиКуипиКуипиКуипиКуипиКуипиКуипиКуипиКуип')");
+        base.execSQL("INSERT INTO cooks VALUES ('OMELET','OMELETTTTTTTTTTTTTTTTTTTTTTTTTTT', 'OMELETTTTTTTTTTTTTTTTTTTTTTTTTTT')");
 
         scrool.addView(child)
         add("Кулябяка", scrool, base)
+        add("OMELET", scrool, base)
 
     }
 
@@ -85,4 +88,4 @@ class MainActivity : AppCompatActivity() {
         }
     }
 }
-
+// TODO над короч добавить ключ в таблицу и улучшить бд, а также сделать чтец из существующей бд-шки. ВСЕМ ПИС!(☞ﾟヮﾟ)☞☜(ﾟヮﾟ☜)
