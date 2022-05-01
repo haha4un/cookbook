@@ -1,24 +1,20 @@
 package com.example.cookbook
 
+import android.content.Context
 import android.content.Intent
-import android.content.res.Resources
 import android.database.Cursor
+import android.database.DatabaseErrorHandler
 import android.database.sqlite.SQLiteDatabase
-import android.graphics.drawable.Drawable
-import android.net.Uri
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
-import androidx.core.graphics.drawable.toDrawable
-import java.lang.reflect.Array
 import java.util.*
 
 class MainActivity : AppCompatActivity() {
-    // TODO над короч добавить ключ в таблицу и улучшить бд, а также сделать чтец из существующей бд-шки. ВСЕМ ПИС!(☞ﾟヮﾟ)☞☜(ﾟヮﾟ☜)
     var test: TextView ?= null
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -29,23 +25,28 @@ class MainActivity : AppCompatActivity() {
          var scrool: LinearLayout = findViewById(R.id.scrooler)
          var child: ImageView = ImageView(this)
 
-         var str = getFilesDir().getPath() + "cooks.sql"
 
-        var base: SQLiteDatabase = baseContext.openOrCreateDatabase("cook.db", MODE_PRIVATE, null)
-//        base.execSQL("DROP TABLE cooks")
-        base.execSQL("CREATE TABLE IF NOT EXISTS cooks (keys, name, what)")
-        base.execSQL("INSERT INTO cooks VALUES ('Кулябяка','КуипиКуипиКуипиКуипиКуипиКуипиКуипиКуипиКуипиКуип', 'КуипиКуипиКуипиКуипиКуипиКуипиКуипиКуипиКуипиКуип')");
-        base.execSQL("INSERT INTO cooks VALUES ('OMELET','OMELETTTTTTTTTTTTTTTTTTTTTTTTTTT', 'OMELETTTTTTTTTTTTTTTTTTTTTTTTTTT')");
+        var  base: SQLiteDatabase = baseContext.openOrCreateDatabase("cook.db", MODE_PRIVATE, null)
+        base.execSQL("CREATE TABLE IF NOT EXISTS cook (keys TEXT NOT NULL, name TEXT NOT NULL, how TEXT NOT NULL)")
+
+        //base.execSQL("DROP TABLE cook")
+
+        if (savedInstanceState == null)
+        {
+            base.execSQL("INSERT INTO cook VALUES ('124','REpa!', 'Куипи[R.drawable.img]КуипиКуипиКуипиКуипиКуипиКуипиКуипиКуипиКуип')");
+            base.execSQL("INSERT INTO cook VALUES ('OMELET','OMELETTTTTTTTTTTTTTTTTTTTTTTTTTT', 'OMELETTTTTTTTTTTTTTTTTTTTTTTTTTT')");
+        }
+
 
         scrool.addView(child)
-        add("Кулябяка", scrool, base)
+        add("124", scrool, base)
         add("OMELET", scrool, base)
 
     }
 
     fun BaseReader(db: SQLiteDatabase, key: String) : kotlin.Array<String>
     {
-        var cursor: Cursor = db.rawQuery("SELECT * FROM cooks", null)
+        var cursor: Cursor = db.rawQuery("SELECT * FROM cook", null)
 
         var name: String = "БЛЮДО: "
         var str: String = ""
@@ -55,9 +56,9 @@ class MainActivity : AppCompatActivity() {
 
             if (key == cursor.getString(0))
             {
-                name += cursor.getString(0)
+                name += cursor.getString(1)
                 str += "Рецепт:\n"
-                str += cursor.getString(1)
+                str += cursor.getString(2)
 
                 arr = arrayOf(name, str)
                 return arr
@@ -88,4 +89,3 @@ class MainActivity : AppCompatActivity() {
         }
     }
 }
-// TODO над короч добавить ключ в таблицу и улучшить бд, а также сделать чтец из существующей бд-шки. ВСЕМ ПИС!(☞ﾟヮﾟ)☞☜(ﾟヮﾟ☜)
