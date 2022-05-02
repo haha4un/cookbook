@@ -58,13 +58,6 @@ class MainActivity : AppCompatActivity() {
 
         scrool.addView(child)
 
-        var test = "for examole [eda] omg"
-        var arr: Array<String> = Array(100, {""})
-              arr =  Read(0, 0, 1, test.toCharArray(), true, arr)
-        scan(1, arr, "[eda]", scrool)
-        // TODO подсоединитть логику.
-
-
         add("1111111", scrool, base, "eda")
         add("2222222", scrool, base, "edas")
 
