@@ -57,15 +57,20 @@ class MainActivity : AppCompatActivity() {
 
 
         scrool.addView(child)
+
         var test = "for examole [eda] omg"
-        var arr: Array<String> = Array(5, {""})
+        var arr: Array<String> = Array(100, {""})
               arr =  Read(0, 0, 1, test.toCharArray(), true, arr)
+        scan(1, arr, "[eda]", scrool)
+        // TODO подсоединитть логику.
+
+
         add("1111111", scrool, base, "eda")
         add("2222222", scrool, base, "edas")
 
     }
 
-    fun Read(start: Int = 0, first: Int = 0, second: Int = 1, str: CharArray, branch: Boolean = true, array: Array<String>, s: Int = 0) : Array<String> {
+    fun Read(start: Int = 0, first: Int = 0, second: Int = 1, str: CharArray, branch: Boolean = true, array: Array<String>, s: Int = 0, barrier: Int = 3) : Array<String> {
 
         if (s >= str.size-1)
             return array
@@ -104,16 +109,32 @@ class MainActivity : AppCompatActivity() {
             First += 2
             Second += 2
         } else {
-            First += 1
-            Second += 1
+            First += 2
+            Second += 2
 
             array[First] = text
-            if (Second > 3)
+            if (Second > barrier)
                 return array
             array[second] = link
 
         }
         return Read(S, First, Second, str, false, array, S)
+    }
+
+    fun scan(Whats: Int, arr: Array<String>, key: String, scrool: LinearLayout) {
+
+        var keys = arr[Whats]
+
+        var sum = "eda"
+        for (i in 0..keys.length - 1)
+        {
+            if (keys[i] != '[' && keys[i] != ']' && keys[i] != '\u0000')
+                sum+=keys[i]
+        }
+
+        var image: ImageView = ImageView(this)
+            image.setImageResource(resources.getIdentifier(sum, "drawable", packageName))
+            scrool.addView(image)
     }
 
     fun BaseReader(db: SQLiteDatabase, key: String) : kotlin.Array<String>
